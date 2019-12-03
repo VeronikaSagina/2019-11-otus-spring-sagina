@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="testingService" class="ru.otus.spring.sagina.services.TestingServiceImpl">
+        <constructor-arg name="csvReaderDao" ref="csvReader"/>
+    </bean>
+
+    <bean id="csvReader" class="ru.otus.spring.sagina.dao.CsvReaderDaoImpl">
+        <constructor-arg name="csvFileName" value="testing.csv"/>
+    </bean>
+
+    <bean id="testItem" class="ru.otus.spring.sagina.entity.TestItem">
+    </bean>
+
+    <bean id="student" class="ru.otus.spring.sagina.entity.Student">
+    </bean>
+
+</beans>
