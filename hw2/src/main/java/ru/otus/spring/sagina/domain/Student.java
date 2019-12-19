@@ -1,10 +1,7 @@
 package ru.otus.spring.sagina.domain;
 
 public class Student {
-    private String name;
-
-    public Student() {
-    }
+    private final String name;
 
     public Student(String name) {
         this.name = name;

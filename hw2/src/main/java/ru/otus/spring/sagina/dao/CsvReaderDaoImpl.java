@@ -21,7 +21,6 @@ public class CsvReaderDaoImpl implements CsvReaderDao {
         this.messageService = messageService;
     }
 
-
     public List<TestItem> getTestItems() {
         if (testItems.isEmpty()) {
             initTestItems();
