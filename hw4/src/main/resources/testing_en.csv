@@ -1,0 +1,5 @@
+"Which exception is checked?",2,1) NullPointerException,2) IOException,3) ClassCastException
+"When the finally block {} is executed",1,"1) The finally block is always executed before exiting the try / finally or try / catch / finally block","2) Only when an unchecked error is thrown in the try {} block","3) Whenever a method completes processing"
+"Which of the following is not true about Collections and Collection?",2,"1)  Collection is the interface for Set and List","2) Collections is a special type of collection that stores many collections","3) Collections is utility class"
+"Which of the listed collections is thread safe?",3, "1) HashMap","2) HashSet","3) Hashtable"
+"What data structure does HashSet use to store its elements?",1, "1) Map","2) Object","3) ArrayList"
