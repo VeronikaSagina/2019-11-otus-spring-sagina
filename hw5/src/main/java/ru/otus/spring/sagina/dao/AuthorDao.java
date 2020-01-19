@@ -5,7 +5,7 @@ import ru.otus.spring.sagina.domain.Author;
 import java.util.List;
 
 public interface AuthorDao {
-    void create(Author author);
+    Author create(Author author);
 
     int update(Author author);
 
@@ -16,8 +16,6 @@ public interface AuthorDao {
     List<Author> getByName(String name);
 
     List<Author> getAll();
-
-    int getIdFromSequence();
 
     boolean existsById(Integer id);
 }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataAccessException;
 import ru.otus.spring.sagina.domain.Author;
 import ru.otus.spring.sagina.exceptions.NotFoundException;
 import ru.otus.spring.sagina.testdata.AuthorData;
@@ -22,20 +21,13 @@ class AuthorDaoTest {
     @Test
     void createTest() {
         authorDao.create(AuthorData.PUSHKIN);
-        List<Author> expected = Arrays.asList(
-                AuthorData.TOLSTOY, AuthorData.SAPKOWSKI, AuthorData.CHRISTIE,
-                AuthorData.TOLKIEN, AuthorData.PELEVIN, AuthorData.PUSHKIN);
-        Assertions.assertEquals(expected, authorDao.getAll());
+        Assertions.assertEquals(6, authorDao.getAll().size());
+        Assertions.assertEquals( AuthorData.PUSHKIN.getName(), authorDao.getAll().get(5).getName());
     }
 
     @Test
     void createTestNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> authorDao.create(new Author(6, null)));
-    }
-
-    @Test
-    void createTestException() {
-        Assertions.assertThrows(DataAccessException.class, () -> authorDao.create(AuthorData.PELEVIN));
+        Assertions.assertThrows(NullPointerException.class, () -> authorDao.create(new Author(null)));
     }
 
     @Test
@@ -73,6 +65,7 @@ class AuthorDaoTest {
     void getByNameTest() {
         Assertions.assertEquals(List.of(AuthorData.SAPKOWSKI), authorDao.getByName("анджей"));
     }
+
     @Test
     void getByNameTest2() {
         Assertions.assertEquals(List.of(AuthorData.SAPKOWSKI, AuthorData.PELEVIN), authorDao.getByName("п"));
@@ -84,11 +77,6 @@ class AuthorDaoTest {
                 AuthorData.TOLSTOY, AuthorData.SAPKOWSKI,
                 AuthorData.CHRISTIE, AuthorData.TOLKIEN, AuthorData.PELEVIN);
         Assertions.assertEquals(expected, authorDao.getAll());
-    }
-
-    @Test
-    void getIdFromSequenceTest() {
-        Assertions.assertEquals(6, authorDao.getIdFromSequence());
     }
 
     @Test

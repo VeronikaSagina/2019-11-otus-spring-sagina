@@ -133,18 +133,19 @@ class BookServiceTest {
         CreateBookDto bookDto = new CreateBookDto(BookData.SNUFF.getTitle(), AuthorData.PELEVIN.getId(),
                 List.of(GenreData.FANTASTIC.getId(), GenreData.NOVEL.getId()));
         Mockito.when(authorDao.getById(AuthorData.PELEVIN.getId())).thenReturn(AuthorData.PELEVIN);
-        Mockito.when(bookDao.getIdFromSequence()).thenReturn(5);
         Mockito.when(genreDao.getByIds(bookDto.genreIds)).thenReturn(Set.of(GenreData.FANTASTIC, GenreData.NOVEL));
+        Mockito.when(bookDao.create(Mockito.any())).thenReturn(BookData.SNUFF);
+
+        Book expected = new Book(bookDto.title, AuthorData.PELEVIN);
+        expected.getGenres().addAll(Set.of(GenreData.FANTASTIC, GenreData.NOVEL));
 
         BookDto actual = bookService.createBook(bookDto);
-        Mockito.verify(bookDao).create(Mockito.any());
+        Mockito.verify(bookDao).create(expected);
 
         Assertions.assertEquals(BookData.SNUFF.getId(), actual.id);
         Assertions.assertEquals(BookData.SNUFF.getAuthor().getId(), actual.author.id);
         Assertions.assertEquals(BookData.SNUFF.getAuthor().getName(), actual.author.name);
         Assertions.assertEquals(BookData.SNUFF.getTitle(), actual.title);
-        Assertions.assertEquals(Set.of(GenreDtoMapper.toDto(GenreData.FANTASTIC), GenreDtoMapper.toDto(GenreData.NOVEL))
-                , actual.genres);
     }
 
     @Test

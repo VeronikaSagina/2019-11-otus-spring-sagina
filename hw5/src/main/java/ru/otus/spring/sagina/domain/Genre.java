@@ -1,9 +1,19 @@
 package ru.otus.spring.sagina.domain;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Genre {
-    private final int id;
-    private final String type;
+    private int id;
+    private String type;
+
+    public Genre(String type) {
+        this.type = type;
+    }
 }

@@ -3,7 +3,7 @@ package ru.otus.spring.sagina.dao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.spring.sagina.domain.Author;
 import ru.otus.spring.sagina.domain.Book;
 import ru.otus.spring.sagina.exceptions.NotFoundException;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Service
 public class BookDaoImpl implements BookDao {
     private static final RowMapper<Book> BOOK_ROW_MAPPER =
             (rs, rowNum) -> new Book(rs.getInt("book_id"), rs.getString("title"),
@@ -24,12 +24,14 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void create(Book book) {
+    public Book create(Book book) {
+        int bookId = getIdFromSequence();
         template.update("insert into book values (:book_id, :title, :author_id)",
-                Map.of("book_id", book.getId(), "title", book.getTitle(), "author_id", book.getAuthor().getId()));
+                Map.of("book_id", bookId, "title", book.getTitle(), "author_id", book.getAuthor().getId()));
         book.getGenres().forEach(g -> template.update(
                 "insert into book_genre values (:book_id, :genre_id)", Map.of(
-                        "book_id", book.getId(), "genre_id", g.getId())));
+                        "book_id", bookId, "genre_id", g.getId())));
+        return new Book(bookId, book.getTitle(), book.getAuthor(), book.getGenres());
     }
 
     @Override
@@ -98,7 +100,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> getAll() {
         return template.query("select book_id, title, book.author_id as author_id, name from book " +
-                        "join author on book.author_id = author.author_id  order by author_id", BOOK_ROW_MAPPER);
+                "join author on book.author_id = author.author_id  order by author_id", BOOK_ROW_MAPPER);
     }
 
     @Override
@@ -131,8 +133,7 @@ public class BookDaoImpl implements BookDao {
                 Map.of("author_id", authorId), Integer.class);
     }
 
-    @Override
-    public int getIdFromSequence() {
+    private int getIdFromSequence() {
         return template.queryForObject("select seq_book.nextval", Collections.emptyMap(), Integer.class);
     }
 }

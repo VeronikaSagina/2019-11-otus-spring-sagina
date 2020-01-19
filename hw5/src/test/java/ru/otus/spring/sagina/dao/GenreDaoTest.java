@@ -57,11 +57,6 @@ class GenreDaoTest {
     }
 
     @Test
-    void getIdFromSequenceTest() {
-        Assertions.assertEquals(5, genreDao.getIdFromSequence());
-    }
-
-    @Test
     void existsByIdTest() {
         Assertions.assertTrue(genreDao.existsById(1));
         Assertions.assertFalse(genreDao.existsById(5));

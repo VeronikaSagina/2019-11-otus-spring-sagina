@@ -23,10 +23,8 @@ public class GenreService {
 
     @Transactional
     public GenreDto createGenre(CreateGenreDto genreDto) {
-        int id = genreDao.getIdFromSequence();
-        Genre created = new Genre(id, genreDto.type);
-        genreDao.create(created);
-        return GenreDtoMapper.toDto(created);
+        Genre created = new Genre(genreDto.type);
+        return GenreDtoMapper.toDto(genreDao.create(created));
     }
 
     @Transactional

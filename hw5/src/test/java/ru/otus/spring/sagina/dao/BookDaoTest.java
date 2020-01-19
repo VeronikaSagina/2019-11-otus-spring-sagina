@@ -47,7 +47,7 @@ class BookDaoTest {
     @Test
     void update2Test() {
         Book forUpdate = new Book(1, "Анна убитая", null);
-        forUpdate.setGenres(Set.of(GenreData.DETECTIVE, GenreData.FANTASY, GenreData.FANTASTIC));
+        forUpdate.getGenres().addAll(Set.of(GenreData.DETECTIVE, GenreData.FANTASY, GenreData.FANTASTIC));
         bookDao.update(forUpdate);
         Book updated = new Book(1, "Анна убитая", AuthorData.TOLSTOY);
         List<Book> expectedList = Arrays.asList(
@@ -115,10 +115,5 @@ class BookDaoTest {
     @Test
     void getBooksByGenreId() {
         Assertions.assertEquals(List.of(BookData.BLOOD_OF_ELVES), bookDao.getBooksByGenreId(3));
-    }
-
-    @Test
-    void getIdFromSequenceTest() {
-        Assertions.assertEquals(5, bookDao.getIdFromSequence());
     }
 }

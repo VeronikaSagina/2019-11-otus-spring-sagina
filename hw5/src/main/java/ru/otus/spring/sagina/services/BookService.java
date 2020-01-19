@@ -32,11 +32,9 @@ public class BookService {
     @Transactional
     public BookDto createBook(CreateBookDto book) {
         Author author = authorDao.getById(book.authorId);
-        int id = bookDao.getIdFromSequence();
-        Book createdBook = new Book(id, book.title, author);
-        createdBook.setGenres(genreDao.getByIds(book.genreIds));
-        bookDao.create(createdBook);
-        return BookDtoMapper.toDto(createdBook);
+        Book createdBook = new Book(book.title, author);
+        createdBook.getGenres().addAll(genreDao.getByIds(book.genreIds));
+        return BookDtoMapper.toDto(bookDao.create(createdBook));
     }
 
     @Transactional
@@ -46,10 +44,10 @@ public class BookService {
         }
         Author author = book.authorId == null ? null : authorDao.getById(book.authorId);
         Book bookForUpdate = new Book(book.id, book.title, author);
-        bookForUpdate.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(book.id)));
+        bookForUpdate.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(book.id)));
         bookDao.update(bookForUpdate);
         Book updatedBook = bookDao.getById(book.id);
-        updatedBook.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(book.id)));
+        updatedBook.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(book.id)));
         return BookDtoMapper.toDto(updatedBook);
     }
 
@@ -60,13 +58,13 @@ public class BookService {
 
     public BookDto getBookByTitle(String title) {
         Book book = bookDao.getByTitle(title);
-        book.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(book.getId())));
+        book.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(book.getId())));
         return BookDtoMapper.toDto(book);
     }
 
     public List<BookDto> getAllBooks() {
         List<Book> books = bookDao.getAll();
-        books.forEach(b -> b.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(b.getId()))));
+        books.forEach(b -> b.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(b.getId()))));
         return books.stream()
                 .map(BookDtoMapper::toDto)
                 .collect(Collectors.toList());
@@ -79,7 +77,7 @@ public class BookService {
         }
         List<Book> books = new ArrayList<>();
         authors.forEach(a -> books.addAll(bookDao.getAllByAuthor(a)));
-        books.forEach(b -> b.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(b.getId()))));
+        books.forEach(b -> b.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(b.getId()))));
         return books.stream()
                 .map(BookDtoMapper::toDto)
                 .collect(Collectors.toList());
@@ -87,7 +85,7 @@ public class BookService {
 
     public List<BookDto> getBooksByGenreId(int genreId) {
         List<Book> books = bookDao.getBooksByGenreId(genreId);
-        books.forEach(b -> b.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(b.getId()))));
+        books.forEach(b -> b.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(b.getId()))));
         return books.stream()
                 .map(BookDtoMapper::toDto)
                 .collect(Collectors.toList());
@@ -99,7 +97,7 @@ public class BookService {
 
     public BookDto getBook(int id) {
         Book book = bookDao.getById(id);
-        book.setGenres(genreDao.getByIds(bookDao.getBookGenresIds(book.getId())));
+        book.getGenres().addAll(genreDao.getByIds(bookDao.getBookGenresIds(book.getId())));
         return BookDtoMapper.toDto(book);
     }
 

@@ -3,7 +3,7 @@ package ru.otus.spring.sagina.dao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.spring.sagina.domain.Author;
 import ru.otus.spring.sagina.exceptions.NotFoundException;
 
@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Service
 public class AuthorDaoImpl implements AuthorDao {
     public static final RowMapper<Author> AUTHOR_ROW_MAPPER =
             (rs, rowNum) -> new Author(rs.getInt("author_id"), rs.getString("name"));
@@ -22,9 +22,11 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public void create(Author author) {
+    public Author create(Author author) {
+        int authorId = getIdFromSequence();
         template.update("insert into author values (:author_id, :name)",
-                Map.of("name", author.getName(), "author_id", author.getId()));
+                Map.of("author_id", authorId,"name", author.getName()));
+        return new Author(authorId, author.getName());
     }
 
     @Override
@@ -60,13 +62,12 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public int getIdFromSequence() {
-        return template.queryForObject("select seq_author.nextval", Collections.emptyMap(), Integer.class);
-    }
-
-    @Override
     public boolean existsById(Integer id) {
         return template.queryForObject("select count(*) from author where author_id = :author_id",
                 Map.of("author_id", id), Integer.class) != 0;
+    }
+
+    private int getIdFromSequence() {
+        return template.queryForObject("select seq_author.nextval", Collections.emptyMap(), Integer.class);
     }
 }

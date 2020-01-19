@@ -27,10 +27,10 @@ class GenreServiceTest {
 
     @Test
     void createGenreTest() {
-        Mockito.when(genreDao.getIdFromSequence()).thenReturn(5);
+        Mockito.when(genreDao.create(Mockito.any())).thenReturn(GenreData.BALLAD);
         CreateGenreDto createGenreDto = new CreateGenreDto(GenreData.BALLAD.getType());
         GenreDto actual = genreService.createGenre(createGenreDto);
-        Mockito.verify(genreDao).create(Mockito.any());
+        Mockito.verify(genreDao).create(new Genre(GenreData.BALLAD.getType()));
         Assertions.assertEquals(5, actual.id);
         Assertions.assertEquals(GenreData.BALLAD.getType(), actual.type);
     }

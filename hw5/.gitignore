@@ -33,3 +33,4 @@ out/
 /gradlew
 /gradlew.bat
 /spring-shell.log
+/gradle/

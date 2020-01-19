@@ -26,10 +26,8 @@ public class AuthorService {
 
     @Transactional
     public AuthorDto createAuthor(CreateAuthorDto authorDto) {
-        int id = authorDao.getIdFromSequence();
-        Author created = new Author(id, authorDto.name);
-        authorDao.create(created);
-        return AuthorDtoMapper.getDto(created);
+        Author created = new Author(authorDto.name);
+        return AuthorDtoMapper.getDto(authorDao.create(created));
     }
 
     @Transactional

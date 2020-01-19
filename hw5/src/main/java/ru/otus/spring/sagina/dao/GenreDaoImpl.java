@@ -3,13 +3,13 @@ package ru.otus.spring.sagina.dao;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.otus.spring.sagina.domain.Genre;
 import ru.otus.spring.sagina.exceptions.NotFoundException;
 
 import java.util.*;
 
-@Repository
+@Service
 public class GenreDaoImpl implements GenreDao {
     public static final RowMapper<Genre> GENRE_ROW_MAPPER =
             (rs, rowNum) -> new Genre(rs.getInt("genre_id"), rs.getString("type"));
@@ -20,9 +20,11 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public void create(Genre genre) {
+    public Genre create(Genre genre) {
+        int genreId = getIdFromSequence();
         template.update("insert into genre values (:genre_id, :type)",
-                Map.of("genre_id", genre.getId(), "type", genre.getType()));
+                Map.of("genre_id", genreId, "type", genre.getType()));
+        return new Genre(genreId, genre.getType());
     }
 
     @Override
@@ -60,13 +62,13 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public int getIdFromSequence() {
-        return template.queryForObject("select seq_genre.nextval", Collections.emptyMap(), Integer.class);
-    }
-
-    @Override
     public boolean existsById(int id) {
         return template.queryForObject("select count(*) from genre where genre_id = :genre_id",
                 Map.of("genre_id", id), Integer.class) != 0;
     }
+
+    private int getIdFromSequence() {
+        return template.queryForObject("select seq_genre.nextval", Collections.emptyMap(), Integer.class);
+    }
+
 }

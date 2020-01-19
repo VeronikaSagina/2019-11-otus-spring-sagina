@@ -6,7 +6,7 @@ import ru.otus.spring.sagina.domain.Book;
 import java.util.List;
 
 public interface BookDao {
-    void create(Book book);
+    Book create(Book book);
 
     void update(Book book);
 
@@ -25,8 +25,6 @@ public interface BookDao {
     List<Book> getAllByAuthor(Author author);
 
     List<Integer> getBookGenresIds(int bookId);
-
-    int getIdFromSequence();
 
     List<Book> getBooksByGenreId(int genreId);
 

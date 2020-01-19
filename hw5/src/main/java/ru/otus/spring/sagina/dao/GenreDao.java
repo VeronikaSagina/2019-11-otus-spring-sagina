@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface GenreDao {
-    void create(Genre genre);
+    Genre create(Genre genre);
 
     int update(Genre genre);
 
@@ -17,8 +17,6 @@ public interface GenreDao {
     List<Genre> getByType(String type);
 
     List<Genre> getAll();
-
-    int getIdFromSequence();
 
     boolean existsById(int id);
 }

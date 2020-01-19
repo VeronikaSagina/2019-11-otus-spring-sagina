@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.spring.sagina.dao.AuthorDao;
+import ru.otus.spring.sagina.domain.Author;
 import ru.otus.spring.sagina.dto.request.CreateAuthorDto;
 import ru.otus.spring.sagina.dto.request.UpdateAuthorDto;
 import ru.otus.spring.sagina.dto.response.AuthorDto;
@@ -28,10 +29,9 @@ class AuthorServiceTest {
 
     @Test
     void createAuthorTest() {
-        Mockito.when(authorDao.getIdFromSequence()).thenReturn(6);
-        AuthorDto actual = authorService.createAuthor(new CreateAuthorDto(AuthorData.PUSHKIN.getName()));
-        Assertions.assertEquals(AuthorData.PUSHKIN.getId(), actual.id);
-        Assertions.assertEquals(AuthorData.PUSHKIN.getName(), actual.name);
+        Mockito.when(authorDao.create(Mockito.any())).thenReturn(AuthorData.PUSHKIN);
+        authorService.createAuthor(new CreateAuthorDto(AuthorData.PUSHKIN.getName()));
+        Mockito.verify(authorDao).create(new Author(AuthorData.PUSHKIN.getName()));
     }
 
     @Test
@@ -48,6 +48,7 @@ class AuthorServiceTest {
         Assertions.assertThrows(NotFoundException.class,
                 () -> authorService.updateAuthor(new UpdateAuthorDto(1, AuthorData.PELEVIN.getName())));
     }
+
     @Test
     void deleteAuthorExceptionTest() {
         Mockito.when(bookService.existsByAuthorId(1)).thenReturn(true);
