@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/books.css">
+    <title>Список книг</title>
+</head>
+<body>
+<div class="book_background">
+    <div class="h3_block">
+        <hr>
+        <h3>Список книг</h3>
+        <hr>
+    </div>
+    <div class="table_area">
+        <table>
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Автор</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td>
+                    <a href="book.html" th:href="@{/book/{id}(id = ${book.id})}" th:text="${book.title}">
+                        Руслан и Людмила
+                    </a>
+                </td>
+                <td th:text="${book.author.name}">А.С. Пушкин</td>
+                <td>
+                    <form th:action="@{/book/{id}/delete(id=${book.id})}" method="post">
+                        <input type="submit" value="Удалить"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="book_button" href="edit.html" th:href="@{/book/create}">Добавить новую книгу</a>
+    </div>
+</div>
+</body>
+</html>
