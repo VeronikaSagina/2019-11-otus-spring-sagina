@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/error.css">
+    <title>Информация об ошибке</title>
+</head>
+
+<body>
+<div class="background">
+    <div class="book_text">
+        <h3>Упс! произошла ошибка...</h3>
+        <div>
+            <p th:text="${message}">Сообщение об ошибке</p>
+            <a class="book_button_down" href="book/books.html" th:href="@{/book}">вернуться к списку книг</a>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
