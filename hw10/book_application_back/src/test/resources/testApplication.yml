@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: book_test
+db.name: book_test

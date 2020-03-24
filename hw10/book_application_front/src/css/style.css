@@ -1,0 +1,31 @@
+body {
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #4CAF50;
+    width: 50%;
+    height: 100%;
+}
+
+.book_background {
+    background-color: rgba(221, 238, 132, 0.16);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+hr {
+    width: 30%;
+    color: #4CAF50;
+    margin-top: 20px;
+}
+
+h3 {
+    text-align: center;
+    font-size: 35px;
+    color: #393939;
+    vertical-align: middle;
+}
+
+.h3_block {
+    padding-top: 100px;
+}
