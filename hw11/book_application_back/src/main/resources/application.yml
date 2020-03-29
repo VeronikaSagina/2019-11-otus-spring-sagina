@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      database: book_service
+db.name: book_service
