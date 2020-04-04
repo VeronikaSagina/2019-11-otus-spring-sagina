@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/books.css">
+    <link rel="stylesheet" type="text/css" href="/css/book.css">
+    <title>Список книг</title>
+</head>
+<body>
+<div class="book_background">
+    <div class="button_area">
+        <form th:action="@{/logout}" method="post" action="edit.html">
+            <input class="book_button" type="submit" value="Выйти">
+        </form>
+    </div>
+    <div class="h3_block">
+        <hr>
+        <h3>Список книг</h3>
+        <hr>
+    </div>
+    <div class="table_area">
+        <table>
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Автор</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td>
+                    <a href="book.html" th:href="@{/book/{id}(id = ${book.id})}" th:text="${book.title}">
+                        Руслан и Людмила
+                    </a>
+                </td>
+                <td th:text="${book.author.name}">А.С. Пушкин</td>
+                <td>
+                    <form th:action="@{/book/{id}/delete(id=${book.id})}" method="post">
+                        <input type="submit" value="Удалить"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button_area">
+            <div th:if="${role == 'ROLE_ADMIN'}">
+                <form th:action="@{/user}" method="get" action="/templates/users.html">
+                    <input class="book_button" type="submit" value="Список пользователей">
+                </form>
+            </div>
+            <form th:action="@{/book/create}" method="get" action="edit.html">
+                <input class="book_button" type="submit" value="Добавить новую книгу">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

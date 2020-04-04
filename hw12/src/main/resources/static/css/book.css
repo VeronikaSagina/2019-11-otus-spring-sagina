@@ -1,0 +1,90 @@
+.book_text {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.list {
+    font-size: 30px;
+    display: inline;
+    padding: 5px;
+    margin: 0;
+}
+
+.description {
+    margin: 20px 10px;
+    padding: 0;
+    border: 0;
+    font-size: 20px;
+}
+
+.com {
+    background: #eeeeee;
+    padding: 15px;
+}
+
+.book_button_top {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: 1px #4CAF50;
+    text-align: center;
+    width: 170px;
+    height: 40px;
+}
+
+.book_button_down {
+    margin-right: 10px;
+    margin-bottom: 70px;
+    padding-top: 15px;
+    align-self: flex-end;
+}
+
+.comment_form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 10px;
+}
+
+.button_area {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.top_margin70 {
+    margin-top: 70px;
+}
+
+.center {
+    text-align: center
+}
+
+.input_for_edit {
+    display: flex;
+    justify-content: center;
+}
+
+.genre_list, .genre_select {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.book_button_ {
+    margin-top: 20px;
+    align-self: flex-end;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: 1px #4CAF50;
+    text-align: center;
+    width: 170px;
+}
+
+.height40 {
+    height: 40px;
+}
+
+.a_class {
+    padding-top: 10px;
+    height: 30px;
+}

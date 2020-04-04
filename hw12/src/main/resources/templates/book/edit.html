@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/book.css">
+    <title>Редактирование информации о книге</title>
+</head>
+<body>
+<div class="book_background">
+    <form id="edit-form" th:action="@{/book/edit}" th:method="post" th:object="${book}"
+          action="edit.html">
+        <div class="h3_block">
+            <div>
+                <h3 th:if="${#strings.isEmpty(book.id)}">Добавление новой книги</h3>
+                <h3 th:unless="${#strings.isEmpty(book.id)}">Редактирование книги</h3>
+            </div>
+        </div>
+        <div class="input_for_edit">
+            <div>
+                <label hidden for="id-input">id:</label>
+                <input hidden id="id-input" name="id" type="text" th:value="*{id}" value="1"/>
+            </div>
+            <div class="book_text">
+                <label for="title-input">Название: </label>
+                <input id="title-input" name="title" type="text" th:value="*{title}" value="John Doe"/>
+            </div>
+            <div class="book_text">
+                <label for="author-select">Выберите автора</label>
+                <select id="author-select" name="authorId" th:value="*{author}">
+                    <option th:each="a : ${authors}"
+                            th:value="${a.id}"
+                            th:text="${a.name}">Автор
+                    </option>
+                </select>
+            </div>
+            <div class="book_text" style="display: flex; justify-content:space-between; margin-right:10px">
+                <label for="genre-select" class="genre_select">Укажите жанры</label>
+                <select class="genre_list" id="genre-select" multiple size="4" name="genreIds" th:value="*{genres}">
+                    <option th:each="g : ${genres}"
+                            th:value="${g.id}"
+                            th:text="${g.type}">жанры
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="comment_form">
+            <label for="description-input"></label>
+            <textarea rows="10" cols="100" placeholder="Описание" id="description-input"
+                      name="description" th:text="*{description}">
+                 [[*{description}]]
+        </textarea>
+            <div class="button_area">
+                <a class="book_button_ a_class" th:if="${#strings.isEmpty(book.id)}" href="/">Назад</a>
+                <a class="book_button_ a_class" th:unless="${#strings.isEmpty(book.id)}"
+                   th:href="@{/book/{id}(id = ${book.id})}">Назад</a>
+                <button class="book_button_ height40" type="submit">Сохранить</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
