@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/books.css">
+    <link rel="stylesheet" type="text/css" href="/css/book.css">
+    <title>Список пользователей</title>
+</head>
+<body>
+<div class="book_background">
+    <div class="h3_block">
+        <hr>
+        <h3>Список пользователей</h3>
+        <hr>
+    </div>
+    <div class="table_area">
+        <table>
+            <thead>
+            <tr>
+                <th>Логин</th>
+                <th>Роль</th>
+                <th>Блокировка</th>
+                <th>Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.login}">Толик</td>
+                <td th:text="${user.role.getValue()}">user</td>
+                <td>
+                    <form th:action="@{/user/{id}/lock(id=${user.id})}" method="post">
+                        <div th:if="${user.isLocked()}">
+                            <input type="submit" value="Разблокировать"/>
+                        </div>
+                        <div th:unless="${user.isLocked()}">
+                            <input type="submit" value="Заблокировать"/>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/user/{id}/delete(id=${user.id})}" method="post">
+                        <input type="submit" value="Удалить"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button_area">
+            <form th:action="@{/book}" method="get" action="book/books.html">
+                <input class="book_button" type="submit" value="назад">
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
