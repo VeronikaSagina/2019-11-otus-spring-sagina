@@ -1,0 +1,32 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:bookdb
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+logging:
+  level:
+    root: info
+  file:
+    path: ./application_logs
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,logfile,metrics"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
