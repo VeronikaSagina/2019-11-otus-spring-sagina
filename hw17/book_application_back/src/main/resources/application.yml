@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: ${DB_PATH}
+      port: 27017
+      database: book_service
+server:
+  servlet:
+    context-path: /api

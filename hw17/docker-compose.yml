@@ -1,0 +1,29 @@
+version: "3.2"
+services:
+  back-app:
+    build:
+      context: ./book_application_back/
+    image: book_application_back
+    ports:
+      - 8080:8080
+    environment:
+      - DB_PATH=mongodb://mongo/book_service
+    depends_on:
+      - mongo
+  front-app:
+    build:
+      context: ./book_application_front/
+    image: book_application_front
+    ports:
+      - 3000:80
+    depends_on:
+      - back-app
+  mongo:
+    image: mongo:4.2.6
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+    - type: volume
+      source: ./mongodb_volume  # your path for db volumes
+      target: /data/db
