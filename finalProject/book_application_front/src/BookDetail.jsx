@@ -93,7 +93,7 @@ export default class BookDetail extends React.Component {
                                 <button className={btnTopClass} onClick={() => this.props.history.go(-1)}>Назад</button>
                                 {
                                     sessionToken === null
-                                        ? <p className={btnTopNotAuthorizedClass} onClick={() => this.auth()}
+                                        ? <p className={btnTopNotAuthorizedClass}
                                         >Редактирование доступно только зарегистрированным пользователям</p>
                                         : <BookModal book={this.state.book} name="Редактировать" className={btnTopClass}
                                                      updateParentState={this.refreshBook}/>
