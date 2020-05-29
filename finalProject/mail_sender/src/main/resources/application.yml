@@ -1,0 +1,44 @@
+logging:
+  level:
+    ru.otus.spring.sagina: debug
+    org.springframework.security: debug
+  file:
+    path: ./application_logs
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,logfile,metrics"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+spring:
+  mail:
+    host: smtp.yandex.com
+    port: 465
+    protocol: smtp
+    username: ${MAIL_USER_NAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+        debug: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      group-id: book-application
+mail:
+  template: mail_template.html
+kafka:
+  consumer:
+    topic: book-mail-sender-topic
