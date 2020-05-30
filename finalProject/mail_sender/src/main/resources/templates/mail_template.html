@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<h3 th:text="${name + ', здравствуйте!'}">Здравствуйте!</h3>
+<hr>
+<div>
+    <p th:text="'Предлагаем вам к прочтению книгу ' + '&quot;' + ${book_name} + '&quot;'">Предлагаем вам к прочтению книгу</p>
+    <hr>
+    <p th:text="${content}">сообщение</p>
+    <a href="localhost:8080/book" th:href="@{{host}/book/{book_id}(host=${host},book_id=${book_id})}">читать</a>
+</div>
+</body>
+</html>

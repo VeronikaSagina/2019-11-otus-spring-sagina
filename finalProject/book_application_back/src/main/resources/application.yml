@@ -1,0 +1,56 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 400MB
+      max-request-size: 400MB
+  datasource:
+    password: postgres
+    username: postgres
+    url: ${DB_PATH}
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    schemas: public
+    baseline-on-migrate: true
+    locations: classpath:/db/migration
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+    consumer:
+      group-id: book-application
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  servlet:
+    context-path: /api
+logging:
+  level:
+    ru.otus.spring.sagina: debug
+    org.springframework.security: debug
+  file:
+    path: ./application_logs
+minio:
+  key:
+    access: ${MINIO_ACCESS_KEY}
+    secret: ${MINIO_SECRET_KEY}
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,logfile,metrics"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+kafka:
+  enable: true
+  producer:
+    topic: book-mail-sender-topic
